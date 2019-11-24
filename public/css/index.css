@@ -32,4 +32,13 @@ body{
     height: 10vh;
 }
 
+.ps-img {
+   height: 40vh;
+   object-fit: cover;
+}
+.parrafo-principal{
+    height: 15vh;
+    overflow: hidden;
+}
+
 

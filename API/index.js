@@ -87,7 +87,8 @@ let peliculas = [
         "imdbID": "10",
         "Type": "movie",
         "Poster": "https://m.media-amazon.com/images/M/MV5BMzIxMDkxNDM2M15BMl5BanBnXkFtZTcwMDA5ODY1OQ@@._V1_SX300.jpg"
-      }
+      },
+      
 ];
 let longitud = peliculas.length;
 console.log(longitud);
@@ -102,7 +103,6 @@ app.get('/api',(req,res)=>{
     )
 });
 
-
 app.get(
   '/api/peliculas',(req,res)=>{
     res.send(
@@ -113,7 +113,71 @@ app.get(
     )
 });
 
+app.post(
+  '/api/peliculas',(req,res)=>{
+    const datos = req.body;
+    if(datos.imdbID){
+      //Modificarlo
+      const pelicula = {
+        "Title": datos.Title,
+        "Year": datos.Year,
+        "imdbID": datos.imdbID,
+        "Type": datos.Type,
+        "Poster": datos.Poster
+      }
+      const indice = peliculas.findIndex(item => item.imdbID == datos.imdbID);
+      peliculas[indice] = pelicula;
 
+    }else{
+      //Crearlo
+      const pelicula = {
+        "Title": datos.Title,
+        "Year": datos.Year,
+        "imdbID": 99999,
+        "Type": datos.Type,
+        "Poster": datos.Poster
+      }
+      peliculas.push(pelicula);
+    }
+
+    res.send(
+        {
+            data:peliculas, 
+            status:'succes'
+        }
+    )
+});
+
+
+
+
+
+app.post('/api/peliculas/insertar', (req, res) => {
+  if (!req.body.imdbID) {
+      const nuevaPelicula = { 
+          ...req.body, 
+          imdbID: (peliculas.length+1)+'' 
+      }
+      peliculas.push(nuevaPelicula);
+      res.send({
+          success: true,
+          peliculas: peliculas,
+          mensaje: 'Pelicula agregada exitosamente',
+          codigo: nuevaPelicula.imdbID
+      });
+
+  } else {
+      const nuevaPelicula = { ...req.body }
+      const indice = peliculas.findIndex(item => item.codigo == req.body.codigo);
+      peliculas[indice] = nuevaPelicula;
+      res.send({
+          success: true,
+          peliculas: peliculas,
+          mensaje: 'servicio modificado exitosamente',
+          codigo: nuevaPelicula.imdbID
+      })
+  }
+});
 
 
 
