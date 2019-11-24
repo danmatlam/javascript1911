@@ -1,0 +1,5 @@
+Inicializador del proyecto
+npm init
+
+Instalar dependencias
+npm i nombreDependencia
