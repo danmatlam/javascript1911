@@ -9,8 +9,16 @@ async function obtenerPeliculas () {
     }
     return [];
 }
-const peliculas = obtenerPeliculas();
-debugger;
+obtenerPeliculas().then(data => {
+    let lista = '';
+    for(let i =0 ; i< data.length ; i++){
+        lista = lista + `<li>${data[i].Title}</li>`;
+    }
+    document.getElementById("peliculas").innerHTML = `<ul>${lista}</ul>`;  
+});
+
+
+
 
 
 function suma(a,b){
