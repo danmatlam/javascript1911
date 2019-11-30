@@ -54,12 +54,19 @@ const resultado = suma(20,8);
 
 
 function guardarPelicula(event){
+
+  //RECUPERAR DATOS
   event.preventDefault();
-  let formData = {};
+  let pelicula = {};
   $.each($('#formPeliculas').serializeArray(), function (i, field) {
-    formData[field.name] = field.value;
+    pelicula[field.name] = field.value;
   });
-  formData;
+  pelicula;
+  debugger
+  // INSERTAR INFORMACION EN BACKEND
+
+
+
 
 }
 

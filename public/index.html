@@ -9,28 +9,59 @@
 <body>
     <!-- header -->
     <div class="header"></div>
-        <!-- 
-        "Title": "Batman: The Dark Knight Returns, Part 1",
-        "Year": "2012",
-        "imdbID": "10",
-        "Poster": "" -->
-    <form id="formPeliculas" onsubmit="guardarPelicula(event)">
-        <input type="text" class="form-control" id="imdbID" name="imdbID" >
-        <div class="form-group">
-            <label for="Title">Titulo</label>
-            <input type="text" class="form-control" id="Title" name="Title" placeholder="Pelicula">
+   
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Producto + 
+    </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Guardar producto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="form-group">
-            <label for="Year">Anio</label>
-            <input type="number" class="form-control" id="Year" name="Year"  placeholder="Ingrese el anio">
-        </div>
-        <div class="form-group">
-            <label for="Poster">Poster</label>
-            <input type="text" class="form-control" id="Poster"  name="Poster" placeholder="Portada">
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-    </form>
+        <div class="modal-body">
+   
 
+                <form id="formPeliculas" onsubmit="guardarPelicula(event)">
+
+                        <input type="text" class="form-control" id="imdbID" name="imdbID" >
+                       
+                        <div class="form-group">
+                            <label for="Title">Titulo</label>
+                            <input type="text" class="form-control" id="Title" name="Title" placeholder="Pelicula">
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="Year">Anio</label>
+                            <input type="number" class="form-control" id="Year" name="Year"  placeholder="Ingrese el anio">
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="Poster">Poster</label>
+                            <input type="text" class="form-control" id="Poster"  name="Poster" placeholder="Portada">
+                        </div>
+                
+
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+
+  
     <div class="row">
         <div class="col-md-9  col-sm-12">
             <h1>Peliculas</h1>

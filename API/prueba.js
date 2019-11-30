@@ -71,16 +71,10 @@ function facturaNormal (st,t){
     console.log("valorNeto: " +valorNeto.toFixed(2))
 }    
 
-
  
 function costoUnitario (ct,q) {
- 
     let costoUnitario = ct/q
- 
     console.log("Costo unitario = " +costoUnitario.toFixed(2))
- 
-    
-    
 }costoUnitario(100,7)
 
 
