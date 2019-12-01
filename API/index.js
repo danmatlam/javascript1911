@@ -91,105 +91,99 @@ let peliculas = [
     "Type": "movie",
     "Poster": "https://m.media-amazon.com/images/M/MV5BMzIxMDkxNDM2M15BMl5BanBnXkFtZTcwMDA5ODY1OQ@@._V1_SX300.jpg"
   },
-  
+
 ];
 let longitud = peliculas.length;
 
-app.get('/api',(req,res)=>{
+app.get('/api', (req, res) => {
   res.send(
-      {
-          texto:'hola', 
-          status:'succes'
-      }
+    {
+      texto: 'hola',
+      status: 'succes'
+    }
   )
-  });
+});
 const suma = require('./test').suma;
-app.post('/api/suma',(req,res)=>{
+app.post('/api/suma', (req, res) => {
   const datos = req.body;
-    const resultado = suma(
-      datos.valorTotal,
-      datos.iva
-    );
+  const resultado = suma(
+    datos.valorTotal,
+    datos.iva
+  );
   res.send({
     respuesta: resultado
   });
 });
 
 
-
-
+const PeliculasController = require('./controllers/PeliculasController');
 app.get(
-'/api/peliculas',(req,res)=>{
-res.send(
-    {
-        data:peliculas, 
-        status:'succes'
-    }
-)
-});
+  '/api/peliculas', (req, res) => {
+    res.send(
+      {
+        data: peliculas,
+        status: 'succes'
+      }
+    )
+  });
 app.post(
-'/api/peliculas',(req,res)=>{
-const datos = req.body;
-console.log(datos)
-if(datos.imdbID!=''){
-  //Modificarlo
-  console.log('modificcar')
-  const pelicula = {
-    "Title": datos.Title,
-    "Year": datos.Year,
-    "imdbID": datos.imdbID,
-    "Type": datos.Type,
-    "Poster": datos.Poster
-  }
-  const indice = peliculas.findIndex(item => item.imdbID == datos.imdbID);
-  peliculas[indice] = pelicula;
-  res.send(
-    {
-        data:peliculas, 
-        status:'succes'
+  '/api/peliculas', (req, res) => {
+    const datos = req.body;
+    console.log(datos)
+    if (datos.imdbID != '') {
+      //Modificarlo
+      console.log('modificcar')
+      const pelicula = {
+        "Title": datos.Title,
+        "Year": datos.Year,
+        "imdbID": datos.imdbID,
+        "Type": datos.Type,
+        "Poster": datos.Poster
+      }
+      const indice = peliculas.findIndex(item => item.imdbID == datos.imdbID);
+      peliculas[indice] = pelicula;
+      res.send(
+        {
+          data: peliculas,
+          status: 'succes'
+        }
+      )
+    } else {
+      //Crearlo
+      console.log('crear')
+      const pelicula = {
+        "Title": datos.Title,
+        "Year": datos.Year,
+        "imdbID": 99999,
+        "Type": datos.Type,
+        "Poster": datos.Poster
+      }
+      peliculas.push(pelicula);
+      res.send({ data: peliculas, status: 'succes' }
+      )
     }
-)
-}else{
-  //Crearlo
-  console.log('crear')
-  const pelicula = {
-    "Title": datos.Title,
-    "Year": datos.Year,
-    "imdbID": 99999,
-    "Type": datos.Type,
-    "Poster": datos.Poster
-  }
-  peliculas.push(pelicula);
-  res.send({data:peliculas, status:'succes'}
-)
-}
 
-console.log(peliculas);
+    console.log(peliculas);
 
 
-});
+  });
 app.delete(
-  '/api/peliculas',(req,res)=>{
-   const datos = req.body;
-  const indice = peliculas.findIndex(item => item.imdbID == datos.imdbID);
-  peliculas.splice(indice, 1);
-  res.send({data:peliculas, status:'succes'}
-  )
-});
+  '/api/peliculas', (req, res) => {
+    PeliculasController.deletePeliculas(req, res);
+  });
 
 
-
-
-const ClientesController = require('./controllers/ClientesControllers')
+const ClientesController = require('./controllers/ClientesControllers');
 app.get("/api/clientes", (req, res) => {
   ClientesController.getClientes(res)
 });
-app.put("/api/clientes", (req, res) => {
-  ClientesController.updateCliente(req,res)
-})
 app.post("/api/clientes", (req, res) => {
-  ClientesController.SaveCliente(req,res)
+  ClientesController.SaveCliente(req, res)
 })
+app.put("/api/clientes", (req, res) => {
+  ClientesController.updateCliente(req, res)
+})
+
 
 
 

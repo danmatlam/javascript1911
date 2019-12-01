@@ -49,6 +49,7 @@ async function _guardarPelicula(payload) {
   const result = await response.json();
   return result;
 }
+
 function guardarPelicula(event) {
   event.preventDefault();
   let pelicula = {};
@@ -56,24 +57,72 @@ function guardarPelicula(event) {
     pelicula[field.name] = field.value;
   });
 
-
   _guardarPelicula(pelicula).then(data => {
     debugger
     let lista = '';
     if (data.status) {
       genericRedibujar(data.data);
     }
+  });
 
+  $("#exampleModal").modal('hide');
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+async function _EliminarPelicula(payload) {
+  const url = '/api/peliculas';
+  let response = await fetch(url, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+  const result = await response.json();
+  return result;
+}
+function eliminar(id) {
+  debugger
+  _EliminarPelicula({ imdbID: id }).then(data => {
+    debugger;
+    if (data.status) {
+      genericRedibujar(data.data);
+    } else {
+
+    }
   });
 }
 
 
-function editar(id) {
-  alert(id);
-}
 
-function eliminar(id) {
-  alert(id);
+function editar(id) {
+  $("#exampleModal").modal();
+  obtenerPeliculas().then(data => {
+    const indice = data.findIndex(item => item.imdbID == id);
+    const pelicula = data[indice];
+
+    //POBLAR FORMULARIO
+    document.getElementById("Title").value = pelicula.Title;
+    document.getElementById("imdbID").value = pelicula.imdbID;
+    document.getElementById("Year").value = pelicula.Year;
+    document.getElementById("Poster").value = pelicula.Poster;
+
+
+
+  });
+
 }
 
 
