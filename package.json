@@ -6,9 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node API/index.js",
-    "dev": "nodemon API/index.js",
-    "pru": "nodemon API/prueba.js"
-
+    "dev": "nodemon API/index.js"
   },
   "author": "danmatlam",
   "license": "ISC",
@@ -17,6 +15,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "firebase": "^7.5.0",
     "http": "0.0.0",
     "nodemon": "^2.0.1",
     "open": "^7.0.0",

@@ -1,3 +1,28 @@
+function genericRedibujar(payload){
+  let lista = '';
+  for(let i =0 ; i< payload.length ; i++){
+      lista = lista + 
+      `<div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <img src=${payload[i].Poster} class="ps-img  bd-placeholder-img card-img-top"/>
+          <div class="card-body">
+            <p class="card-text parrafo-principal">${payload[i].Title}</p>
+            <p class="card-text">Año: ${payload[i].Year}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary" onClick="eliminar(${payload[i].imdbID}) >Elimar</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" onClick="editar(${payload[i].imdbID})">Editar</button>
+              </div>
+              <small class="text-muted">9 mins</small>
+            </div>
+          </div>
+        </div>
+      </div
+      `;
+  }a
+  document.getElementById("peliculas").innerHTML = `<div class="row">${lista}</div>`;  
+};
+
 
 async function obtenerPeliculas () {
     const url ='/api/peliculas';
@@ -10,64 +35,41 @@ async function obtenerPeliculas () {
     return [];
 }
 obtenerPeliculas().then(data => {
-    let lista = '';
-    for(let i =0 ; i< data.length ; i++){
-        lista = lista + `<li>${data[i].Title}</li>`;
-    }
-    document.getElementById("peliculas").innerHTML = `<ul>${lista}</ul>`;  
-});
-
-obtenerPeliculas().then(data => {
-    let lista = '';
-    for(let i =0 ; i< data.length ; i++){
-        lista = lista + 
-        `<div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img src=${data[i].Poster} class="ps-img  bd-placeholder-img card-img-top"/>
-            <div class="card-body">
-              <p class="card-text parrafo-principal">${data[i].Title}</p>
-              <p class="card-text">Año: ${data[i].Year}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Elimar</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
-                </div>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        `;
-    }
-    document.getElementById("peliculas").innerHTML = `<div class="row">${lista}</div>`;  
+  genericRedibujar(data);
 });
 
 
-
-
-
-function suma(a,b){
-    return a+b;
+async function _guardarPelicula (payload) {
+  const url ='/api/peliculas';
+    let response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json;charset=utf-8' },
+        body: JSON.stringify(payload)
+    });
+    const result = await response.json();
+    return result;
 }
-const resultado = suma(20,8);
-
-
-
 function guardarPelicula(event){
-
-  //RECUPERAR DATOS
   event.preventDefault();
   let pelicula = {};
   $.each($('#formPeliculas').serializeArray(), function (i, field) {
     pelicula[field.name] = field.value;
   });
-  pelicula;
-  debugger
-  // INSERTAR INFORMACION EN BACKEND
 
 
+  _guardarPelicula(pelicula).then(data => {
+    debugger
+    let lista = '';
+    if(data.status){
+      genericRedibujar(data.data); 
+    }
+    
+  });
+}
 
 
+function editar(id) {
+  alert('test');
 }
 
 
